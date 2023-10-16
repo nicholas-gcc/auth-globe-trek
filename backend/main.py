@@ -1,15 +1,10 @@
-from typing import Union
-
 from fastapi import FastAPI
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
+
+from routers import auth  # Import after loading env variables
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(auth.router, prefix="/api/v1", tags=["auth"])
