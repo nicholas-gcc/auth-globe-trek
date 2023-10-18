@@ -25,7 +25,7 @@ async def create_export_job():
     body = {
         "connection_id": CONNECTION_ID,
         "format": "json",
-        "limit": 20,
+        "limit": 100,
         "fields": [
             {
                 "name": "user_metadata.last_login_ip"
