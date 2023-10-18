@@ -1,13 +1,27 @@
 import json
 import random
 
-users = []
+def generate_base_ips(num):
+    return [f"{random.randint(1, 223)}.{random.randint(0, 255)}.{random.randint(0, 255)}" for _ in range(num)]
 
-for i in range(1):
+def get_ip_from_base(base_ips):
+    base_ip = random.choice(base_ips)
+    return f"{base_ip}.{random.randint(0, 255)}"
+
+users = []
+BASE_IP_COUNT = 10
+BASE_IP_CHANCE = 0.7
+base_ips = generate_base_ips(BASE_IP_COUNT)
+
+for i in range(100):
+    if random.random() < BASE_IP_CHANCE:
+        last_login_ip = get_ip_from_base(base_ips)
+    else:
+        last_login_ip = f"{random.randint(1, 223)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}"
+
     user = {
         "email": f"user{i}@test.com",
         "email_verified": False,
-        "username": f"user{i}",
         "given_name": f"User",
         "family_name": f"#{i}",
         "name": f"User #{i}",
@@ -18,11 +32,11 @@ for i in range(1):
         },
         "user_metadata": {
             "theme": "light",
-            # Note: We aren't directly setting 'lastIP' in app_metadata.
-            "last_login_ip": f"{random.randint(1, 223)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}"
+            "last_login_ip": last_login_ip
         }
     }
     users.append(user)
 
 with open("users.json", "w") as outfile:
     json.dump(users, outfile)
+

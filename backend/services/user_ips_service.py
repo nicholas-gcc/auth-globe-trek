@@ -59,11 +59,18 @@ async def get_file_content(download_link):
 
         # Decompress the .gz file to get the JSON content
         gzip_content = io.BytesIO(response.content)
-        with gzip.GzipFile(fileobj=gzip_content, mode='rb') as f:
-            json_content = f.read().decode('utf-8')
+        
+        ip_addresses = []
 
-        # Convert the JSON string to a Python dictionary and return
-        return json.loads(json_content)
+        with gzip.GzipFile(fileobj=gzip_content, mode='rb') as f:
+            for line in f:
+                json_line = json.loads(line.decode('utf-8'))
+                ip_address = json_line.get('user_metadata.last_login_ip')
+                if ip_address:  # ensure the ip_address is not None or empty
+                    ip_addresses.append(ip_address)
+
+        return {"ip_addresses": ip_addresses}
+
 
 async def fetch_user_ips():
     job_id = await create_export_job()
@@ -72,8 +79,8 @@ async def fetch_user_ips():
     timeout = time.time() + 60*5  # 5 minutes
     
     # Initial backoff time and max backoff time
-    backoff_time = 1  # start with 1 second
-    max_backoff = 32  # max 32 seconds
+    backoff_time = 0.5  # start with 1 second
+    max_backoff = 8  # max 32 seconds
 
     while True:
         status, download_link = await get_job_status(job_id)
