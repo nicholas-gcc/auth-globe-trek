@@ -19,7 +19,7 @@ async def get_user_ips_data(format: Optional[str] = "city"):
 
         geo_start = time.time()
         
-        # Fetch all geolocations using the new batch and concurrent processing method
+        # Fetch all geolocations using batch and concurrent processing method
         all_geolocations = await ipinfo_service.fetch_all_geolocations(ip_addresses)
 
         if format == "city":
