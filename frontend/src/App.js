@@ -1,10 +1,17 @@
-
+import React from 'react';
+import NavBar from './components/NavBar';
+import Map from './components/Map';
+import CityStatistics from './components/CityStatistics';
+import { ChakraProvider, CSSReset } from '@chakra-ui/react';
 
 function App() {
   return (
-    <div className="App">
-      <h1>App</h1>
-    </div>
+    <ChakraProvider>
+      <CSSReset />
+      <NavBar />
+      <Map />
+      <CityStatistics />
+    </ChakraProvider>
   );
 }
 
