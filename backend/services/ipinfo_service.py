@@ -21,7 +21,10 @@ def chunks(lst, n):
         yield lst[i:i + n]
 
 # Asynchronously fetch geolocation details for all IP addresses using batching and parallel processing
-async def fetch_all_geolocations(ip_addresses):
+async def fetch_all_geolocations(user_data):
+    # Extract IP addresses from user_data
+    ip_addresses = [data['ip_address'] for data in user_data]
+    
     # Split IP addresses into batches of 10 (adjust as needed)
     ip_batches = list(chunks(ip_addresses, 10))
     
@@ -33,5 +36,15 @@ async def fetch_all_geolocations(ip_addresses):
     for batch_result in all_geolocations:
         merged_geolocations.update(batch_result)
     
-    return merged_geolocations
+    # Merge geolocations with user metadata
+    updated_user_data = []
+    for data in user_data:
+        ip_address = data['ip_address']
+        geolocation = merged_geolocations.get(ip_address)
+        if geolocation:
+            data['geolocation'] = geolocation
+            updated_user_data.append(data)
+    
+    return updated_user_data
+
 

@@ -13,7 +13,11 @@ BASE_IP_COUNT = 10
 BASE_IP_CHANCE = 0.7
 base_ips = generate_base_ips(BASE_IP_COUNT)
 
-for i in range(100):
+subscription_tiers = ["free", "basic", "premium"]
+referral_sources = ["social media", "word-of-mouth", "advertising"]
+purchasing_behaviors = ["frequent buyer", "one-time buyer", "window shopper"]
+
+for i in range(101, 201):
     if random.random() < BASE_IP_CHANCE:
         last_login_ip = get_ip_from_base(base_ips)
     else:
@@ -32,11 +36,13 @@ for i in range(100):
         },
         "user_metadata": {
             "theme": "light",
-            "last_login_ip": last_login_ip
+            "last_login_ip": last_login_ip,
+            "subscription_tier": random.choice(subscription_tiers),
+            "referral_source": random.choice(referral_sources),
+            "purchasing_behavior": random.choice(purchasing_behaviors),
         }
     }
     users.append(user)
 
 with open("users.json", "w") as outfile:
     json.dump(users, outfile)
-

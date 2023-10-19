@@ -25,10 +25,13 @@ async def create_export_job():
     body = {
         "connection_id": CONNECTION_ID,
         "format": "json",
-        "limit": 100,
+        "limit": 200,
         "fields": [
             {
                 "name": "user_metadata.last_login_ip"
+            },
+            {
+                "name": "user_metadata"
             }
         ]
     }
@@ -60,16 +63,21 @@ async def get_file_content(download_link):
         # Decompress the .gz file to get the JSON content
         gzip_content = io.BytesIO(response.content)
         
-        ip_addresses = []
+        user_data = []
 
         with gzip.GzipFile(fileobj=gzip_content, mode='rb') as f:
             for line in f:
                 json_line = json.loads(line.decode('utf-8'))
                 ip_address = json_line.get('user_metadata.last_login_ip')
-                if ip_address:  # ensure the ip_address is not None or empty
-                    ip_addresses.append(ip_address)
+                user_metadata = json_line.get('user_metadata')
+                if ip_address and user_metadata:  # ensure the ip_address and user_metadata are not None or empty
+                    user_data.append({
+                        "ip_address": ip_address,
+                        "user_metadata": user_metadata,
+                    })
 
-        return {"ip_addresses": ip_addresses}
+        return user_data
+
 
 
 async def fetch_user_ips():
