@@ -1,11 +1,13 @@
 export const addressPoints = [
     [
       "38.9014",
-      "-77.0504"
+      "-77.0504",
+      {"subscription":"premium"}
     ],
     [
       "29.0769",
-      "48.0839"
+      "48.0839",
+      {"subscription":"free"}
     ],
     [
       "30.6667",

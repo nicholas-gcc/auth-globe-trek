@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Flex,
@@ -15,10 +15,12 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Icon,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-
-const Links = ['User IPs', 'Blocked IPs'];
+import { HamburgerIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 
 const NavLink = ({ children }) => {
   return (
@@ -37,8 +39,14 @@ const NavLink = ({ children }) => {
   );
 };
 
-export default function NavBar() {
+export default function NavBar({ onSearch }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
+
+  };
 
   return (
     <>
@@ -53,10 +61,20 @@ export default function NavBar() {
           />
           <HStack spacing={8} alignItems={'center'}>
             <Box>Filters:</Box>
+            <InputGroup>
+              <Input
+                placeholder='e.g. subscription: free'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <InputRightElement
+                children={<Icon as={SearchIcon} />}
+                onClick={handleSearch}
+                cursor="pointer"
+              />
+            </InputGroup>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
@@ -83,9 +101,7 @@ export default function NavBar() {
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              
             </Stack>
           </Box>
         ) : null}
