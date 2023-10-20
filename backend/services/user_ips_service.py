@@ -8,10 +8,25 @@ import io
 import json
 
 from services import auth_service
+from functools import lru_cache
 
 AUTH_DOMAIN = os.getenv("AUTH_DOMAIN")
 CONNECTION_ID = os.getenv("CONNECTION_ID")
 
+cache = {}
+
+def cache_with_ttl(ttl):
+    def decorator(fn):
+        async def wrapper(*args, **kwargs):
+            now = time.time()
+            key = (args, frozenset(kwargs.items()))
+            if key in cache and now < cache[key][1]:
+                return cache[key][0]
+            result = await fn(*args, **kwargs)
+            cache[key] = (result, now + ttl)
+            return result
+        return wrapper
+    return decorator
 
 async def fetch_management_api_token():
     token_data = await auth_service.fetch_auth_token()
@@ -78,8 +93,7 @@ async def get_file_content(download_link):
 
         return user_data
 
-
-
+@cache_with_ttl(ttl=3600)  # Cache for 1 hour
 async def fetch_user_ips():
     job_id = await create_export_job()
     
