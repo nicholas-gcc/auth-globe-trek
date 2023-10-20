@@ -10,14 +10,14 @@ def get_ip_from_base(base_ips):
 
 users = []
 BASE_IP_COUNT = 10
-BASE_IP_CHANCE = 0.7
+BASE_IP_CHANCE = 0.4
 base_ips = generate_base_ips(BASE_IP_COUNT)
 
 subscription_tiers = ["free", "basic", "premium"]
 referral_sources = ["social media", "word-of-mouth", "advertising"]
 purchasing_behaviors = ["frequent buyer", "one-time buyer", "window shopper"]
 
-for i in range(101, 201):
+for i in range(201, 501):
     if random.random() < BASE_IP_CHANCE:
         last_login_ip = get_ip_from_base(base_ips)
     else:

@@ -1,6 +1,5 @@
 import httpx
 import os
-import json
 
 AUTH_DOMAIN = os.getenv("AUTH_DOMAIN")
 CLIENT_ID = os.getenv("CLIENT_ID")

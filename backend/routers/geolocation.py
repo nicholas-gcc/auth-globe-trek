@@ -13,7 +13,7 @@ async def get_user_ips_data(format: Optional[str] = "city"):
         ip_fetch_start = time.time()
         ip_data = await user_ips_service.fetch_user_ips()
         ip_fetch_end = time.time()
-        print(f"Time taken to fetch IPs: {ip_fetch_end - ip_fetch_start} seconds")
+        print(f"Time taken to complete export job: {ip_fetch_end - ip_fetch_start} seconds")
 
         geo_start = time.time()
 
@@ -45,7 +45,7 @@ async def get_user_ips_data(format: Optional[str] = "city"):
             raise HTTPException(status_code=400, detail="Invalid format specified")
 
         geo_end = time.time()
-        print(f"Total time taken for get_user_ips_data: {geo_end - geo_start} seconds")
+        print(f"Time taken to geolocate: {geo_end - geo_start} seconds")
 
         return output
 

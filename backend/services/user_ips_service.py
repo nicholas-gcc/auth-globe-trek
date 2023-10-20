@@ -40,7 +40,7 @@ async def create_export_job():
     body = {
         "connection_id": CONNECTION_ID,
         "format": "json",
-        "limit": 200,
+        "limit": 500,
         "fields": [
             {
                 "name": "user_metadata.last_login_ip"
@@ -101,8 +101,8 @@ async def fetch_user_ips():
     timeout = time.time() + 60*5  # 5 minutes
     
     # Initial backoff time and max backoff time
-    backoff_time = 0.5  # start with 1 second
-    max_backoff = 8  # max 32 seconds
+    backoff_time = 0.5  # start with 0.5 seconds
+    max_backoff = 8  # max 8 seconds
 
     while True:
         status, download_link = await get_job_status(job_id)

@@ -1,0 +1,9 @@
+aiocache==0.12.2
+cachetools==5.3.1
+fastapi==0.103.2
+httpx==0.25.0
+ipinfo==4.4.3
+python-dotenv==1.0.0
+starlette==0.27.0
+uvicorn==0.23.2
+uvloop==0.18.0
