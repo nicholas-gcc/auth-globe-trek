@@ -20,6 +20,7 @@ This project provides an interactive heatmap visualization of user IPs around th
 <p align="center">
     <img src="assets/image.png" alt="Alt text" width="600"/>
 </p>
+
 - Search queries to filter down user distribution based on Auth0 `user_metadata` values (e.g. `subscription_tier: free`, or `purchasing_behaviors: frequent buyer`). The filters help you understand geographical distribution of users based on their profiles so businesses can understand and target regional customer needs
 
 <p align="center">
