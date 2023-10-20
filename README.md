@@ -24,13 +24,13 @@ This project provides an interactive heatmap visualization of user IPs around th
 - Search queries to filter down user distribution based on Auth0 `user_metadata` values (e.g. `subscription_tier: free`, or `purchasing_behaviors: frequent buyer`). The filters help you understand geographical distribution of users based on their profiles so businesses can understand and target regional customer needs
 
 <p align="center">
-    <img src="assets/image-1.png" alt="Alt text" width="400"/>
+    <img src="assets/image-1.png" alt="Alt text" width="200"/>
 </p>
 
 - City + Region Aggregate Statistics. AuthGlobeTrek summarises your top 10 most popular regions for your users
 
 <p align="center">
-    <img src="assets/image-2.png" alt="Alt text" width="400"/>
+    <img src="assets/image-2.png" alt="Alt text" width="200"/>
 </p>
 
 ## Setup
